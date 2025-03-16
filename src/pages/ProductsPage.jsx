@@ -1,5 +1,7 @@
+import ProductDataTable from '@/features/Product/ProductDataTable';
+
 const ProductsPage = () => {
-  return <div>ProductsPage</div>;
+  return <ProductDataTable />;
 };
 
 export default ProductsPage;
