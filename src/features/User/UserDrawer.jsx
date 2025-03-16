@@ -135,7 +135,7 @@ const UserDrawer = ({ open, setOpen, selecteduser }) => {
                       <HStack justify="space-between">
                         <Text fontWeight="bold">Account Status</Text>
                         <Badge colorPalette={user.isDeleted ? 'red' : 'green'}>
-                          {user.isDeleted ? 'Deleted' : 'Active'}
+                          {user.isDeleted ? 'Banned' : 'Active'}
                         </Badge>
                       </HStack>
                     </VStack>
