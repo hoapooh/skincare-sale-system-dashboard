@@ -1,4 +1,6 @@
 import { useColorModeValue } from '@/components/ui/color-mode';
+import { toaster } from '@/components/ui/toaster';
+import { logoutApi } from '@/services/authApi';
 import { useAuthStore } from '@/store/authStore';
 import {
     AvatarFallback,
@@ -21,7 +23,19 @@ import {
 import { FiChevronDown, FiMenu } from 'react-icons/fi';
 
 const MobileNav = ({ onOpen, ...rest }) => {
-    const { user } = useAuthStore();
+    const { user, logout } = useAuthStore();
+    const bgColor = useColorModeValue('white', 'gray.900');
+    const borderBottomColor = useColorModeValue('gray.200', 'gray.700');
+
+    const handleLogout = async () => {
+        await logout();
+        await logoutApi();
+        toaster.success({
+            title: 'Logout successful',
+        });
+    };
+
+    if (!user) return null;
 
     return (
         <Flex
@@ -29,9 +43,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
             px={{ base: 4, md: 4 }}
             height="20"
             alignItems="center"
-            bg={useColorModeValue('white', 'gray.900')}
+            bg={bgColor}
             borderBottomWidth="1px"
-            borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
+            borderBottomColor={borderBottomColor}
             justifyContent={{ base: 'space-between', md: 'flex-end' }}
             {...rest}
         >
@@ -110,6 +124,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                                             color: 'white',
                                         }}
                                         value="logout"
+                                        onClick={handleLogout}
                                     >
                                         Logout
                                     </MenuItem>

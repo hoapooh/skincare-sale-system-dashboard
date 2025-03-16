@@ -1,7 +1,11 @@
 import { Box, Flex, Icon } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const NavItem = ({ icon, children, path, ...rest }) => {
+    const location = useLocation();
+    const isActive = location.pathname === path;
+    const color = isActive ? 'white' : 'black';
+
     return (
         <Link to={path}>
             <Box
@@ -19,6 +23,8 @@ const NavItem = ({ icon, children, path, ...rest }) => {
                         bg: 'brown',
                         color: 'white',
                     }}
+                    color={color}
+                    bg={isActive ? 'brown' : 'transparent'}
                     {...rest}
                 >
                     {icon && (
