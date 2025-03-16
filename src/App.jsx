@@ -1,14 +1,21 @@
 import { Route, Routes } from 'react-router-dom';
 import routes from './configs/routes';
-import NotFound from './components/NotFound/NotFound';
+import NotFound from './features/NotFound/NotFound';
+import { useAuthStore } from './store/authStore';
+import { useEffect } from 'react';
 
 function App() {
+    const { loadUser } = useAuthStore();
+
+    useEffect(() => {
+        loadUser();
+    }, [loadUser]);
 
     return (
         <>
             <Routes>
                 {routes.map((route, i) => {
-                    const Layout = route.layout
+                    const Layout = route.layout;
                     return (
                         <Route key={i} element={<Layout />}>
                             {route.data.map(item => {
@@ -17,16 +24,14 @@ function App() {
                                     <Route
                                         key={item.path}
                                         path={item.path}
-                                        element={
-                                            <Component />
-                                        }
+                                        element={<Component />}
                                     />
-                                )
+                                );
                             })}
                         </Route>
-                    )
+                    );
                 })}
-                <Route path='*' element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     );
