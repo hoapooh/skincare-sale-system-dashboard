@@ -1,11 +1,7 @@
-import { useAuthStore } from '@/store/authStore';
+import Dashboard from '@/features/Dashboard/Dashboard';
 
 const DashboardPage = () => {
-    const { user } = useAuthStore();
-
-    if (!user) return null;
-
-    return <div>{user.email}</div>;
+  return <Dashboard />;
 };
 
 export default DashboardPage;

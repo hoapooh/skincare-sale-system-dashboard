@@ -11,12 +11,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from './components/ui/toaster.jsx';
 
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
-        <ChakraProvider value={theme}>
-            <BrowserRouter>
-                <App />
-                <Toaster />
-            </BrowserRouter>
-        </ChakraProvider>
-    </StrictMode>
+  <StrictMode>
+    <ChakraProvider value={theme}>
+      <BrowserRouter>
+        <App />
+        <Toaster />
+      </BrowserRouter>
+    </ChakraProvider>
+  </StrictMode>
 );
