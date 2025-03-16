@@ -41,6 +41,7 @@ import {
   SelectItemIndicator,
   createListCollection,
   Heading,
+  TableScrollArea,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 // import { AiFillEdit } from 'react-icons/ai';
@@ -52,6 +53,7 @@ import {
 } from 'react-icons/io5';
 import { MdDelete, MdRestore } from 'react-icons/md';
 import UserDrawer from './UserDrawer';
+import { format } from 'date-fns';
 
 const pageSizeCollection = createListCollection({
   items: [
@@ -80,12 +82,12 @@ const DataTable = () => {
   const [users, setUsers] = useState([]);
   const [meta, setMeta] = useState({
     current: 1,
-    pageSize: 10,
+    pageSize: 5,
     pages: 1,
     total: 0,
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
   const [showDeleted, setShowDeleted] = useState(false); // Filter state for showing banned/active users
 
@@ -196,10 +198,6 @@ const DataTable = () => {
     }
   };
 
-  const formatDate = dateString => {
-    return new Date(dateString).toLocaleString();
-  };
-
   // Handle filter change
   const handleFilterChange = booleanValue => {
     const newValue = booleanValue.value === 'true';
@@ -215,12 +213,25 @@ const DataTable = () => {
         <TabsRoot
           defaultValue="false"
           variant="enclosed"
+          colorScheme={'dark'}
           colorPalette="black"
           onValueChange={handleFilterChange}
         >
-          <TabsList>
-            <TabsTrigger value="false">Active Users</TabsTrigger>
-            <TabsTrigger value="true">Banned Users</TabsTrigger>
+          <TabsList bg={'white'} p={1} rounded={'md'}>
+            <TabsTrigger
+              color={'black'}
+              _selected={{ bg: 'black', color: 'white' }}
+              value="false"
+            >
+              Active Users
+            </TabsTrigger>
+            <TabsTrigger
+              color={'black'}
+              _selected={{ bg: 'black', color: 'white' }}
+              value="true"
+            >
+              Banned Users
+            </TabsTrigger>
           </TabsList>
         </TabsRoot>
       </Box>
@@ -232,107 +243,115 @@ const DataTable = () => {
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"
-              color="brown"
+              color="black"
               size="xl"
             />
           </Center>
         ) : (
-          <TableRoot
-            colorPalette={'border'}
-            showColumnBorder
-            interactive
-            variant={'line'}
+          <TableScrollArea
+            borderWidth={1}
+            maxW={'full'}
+            overflow={{ base: 'auto', md: 'hidden' }}
           >
-            {/* Table head */}
-            <TableHeader>
-              <TableRow>
-                <TableColumnHeader>Name</TableColumnHeader>
-                <TableColumnHeader>Email</TableColumnHeader>
-                <TableColumnHeader>Role</TableColumnHeader>
-                <TableColumnHeader>Loyalty Points</TableColumnHeader>
-                <TableColumnHeader>Created At</TableColumnHeader>
-                <TableColumnHeader>Actions</TableColumnHeader>
-              </TableRow>
-            </TableHeader>
-
-            {/* Table body */}
-            <TableBody>
-              {users.map(user => (
-                <TableRow key={user._id}>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    <Badge
-                      colorPalette={user.role === 'admin' ? 'red' : 'green'}
-                      px={2}
-                      py={1}
-                      borderRadius="md"
-                    >
-                      {user.role}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>{user.loyaltyPoints}</TableCell>
-                  <TableCell>{formatDate(user.createdAt)}</TableCell>
-                  <TableCell>
-                    <MenuRoot>
-                      <MenuTrigger
-                        as={Button}
-                        size="sm"
-                        colorPalette={'black'}
-                        colorScheme={'dark'}
-                      >
-                        Actions
-                        <IoChevronDown />
-                      </MenuTrigger>
-                      <Portal>
-                        <MenuPositioner>
-                          <MenuContent>
-                            <MenuItem
-                              value="view"
-                              onClick={() => handleViewUser(user._id)}
-                            >
-                              <GrView />
-                              View
-                            </MenuItem>
-                            {/* <MenuItem
-                                                        value="edit"
-                                                        onClick={() =>
-                                                            handleEditUser(
-                                                                user._id
-                                                            )
-                                                        }
-                                                    >
-                                                        <AiFillEdit />
-                                                        Edit
-                                                    </MenuItem> */}
-                            {!user.isDeleted ? (
-                              <MenuItem
-                                value="ban"
-                                onClick={() => handleBanUser(user._id)}
-                                color="red.500"
-                              >
-                                <MdDelete />
-                                Ban
-                              </MenuItem>
-                            ) : (
-                              <MenuItem
-                                value="unban"
-                                onClick={() => handleUnbanUser(user._id)}
-                                color="green.500"
-                              >
-                                <MdRestore />
-                                Unban
-                              </MenuItem>
-                            )}
-                          </MenuContent>
-                        </MenuPositioner>
-                      </Portal>
-                    </MenuRoot>
-                  </TableCell>
+            <TableRoot
+              colorPalette={'border'}
+              showColumnBorder
+              interactive
+              variant={'line'}
+            >
+              {/* Table head */}
+              <TableHeader>
+                <TableRow>
+                  <TableColumnHeader>Name</TableColumnHeader>
+                  <TableColumnHeader>Email</TableColumnHeader>
+                  <TableColumnHeader>Role</TableColumnHeader>
+                  <TableColumnHeader>Loyalty Points</TableColumnHeader>
+                  <TableColumnHeader>Created At</TableColumnHeader>
+                  <TableColumnHeader>Actions</TableColumnHeader>
                 </TableRow>
-              ))}
-            </TableBody>
-          </TableRoot>
+              </TableHeader>
+
+              {/* Table body */}
+              <TableBody>
+                {users.map(user => (
+                  <TableRow key={user._id}>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                      <Badge
+                        colorPalette={user.role === 'admin' ? 'red' : 'green'}
+                        px={2}
+                        py={1}
+                        borderRadius="md"
+                      >
+                        {user.role}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{user.loyaltyPoints}</TableCell>
+                    <TableCell>
+                      {format(new Date(user.createdAt), 'dd/MM/yyyy')}
+                    </TableCell>
+                    <TableCell>
+                      <MenuRoot>
+                        <MenuTrigger
+                          as={Button}
+                          size="sm"
+                          colorPalette={'black'}
+                          colorScheme={'dark'}
+                        >
+                          Actions
+                          <IoChevronDown />
+                        </MenuTrigger>
+                        <Portal>
+                          <MenuPositioner>
+                            <MenuContent>
+                              <MenuItem
+                                value="view"
+                                onClick={() => handleViewUser(user._id)}
+                              >
+                                <GrView />
+                                View
+                              </MenuItem>
+                              {/* <MenuItem
+                                                          value="edit"
+                                                          onClick={() =>
+                                                              handleEditUser(
+                                                                  user._id
+                                                              )
+                                                          }
+                                                      >
+                                                          <AiFillEdit />
+                                                          Edit
+                                                      </MenuItem> */}
+                              {!user.isDeleted ? (
+                                <MenuItem
+                                  value="ban"
+                                  onClick={() => handleBanUser(user._id)}
+                                  color="red.500"
+                                >
+                                  <MdDelete />
+                                  Ban
+                                </MenuItem>
+                              ) : (
+                                <MenuItem
+                                  value="unban"
+                                  onClick={() => handleUnbanUser(user._id)}
+                                  color="green.500"
+                                >
+                                  <MdRestore />
+                                  Unban
+                                </MenuItem>
+                              )}
+                            </MenuContent>
+                          </MenuPositioner>
+                        </Portal>
+                      </MenuRoot>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </TableRoot>
+          </TableScrollArea>
         )}
 
         {/* Pagination */}
@@ -383,7 +402,13 @@ const DataTable = () => {
                       </IconButton>
                   </HStack>
               </Flex> */}
-        <HStack justifyContent={'space-between'} alignItems={'center'} mt={4}>
+        <HStack
+          flexDir={{ base: 'column', md: 'row' }}
+          justifyContent={'space-between'}
+          alignItems={'center'}
+          gap={2}
+          mt={4}
+        >
           <HStack spacing={2} alignItems="center">
             <Text fontSize={'sm'}>
               Showing{' '}
@@ -394,7 +419,12 @@ const DataTable = () => {
             </Text>
           </HStack>
 
-          <Box display={'flex'} alignItems={'center'} gap={2}>
+          <Box
+            display={'flex'}
+            flexDir={{ base: 'column', md: 'row' }}
+            alignItems={'center'}
+            gap={2}
+          >
             <HStack alignItems={'center'} gap={2} minW={'250px'}>
               <Text fontSize={'sm'} mr={2} w={'full'}>
                 Rows per page:
@@ -402,7 +432,7 @@ const DataTable = () => {
               <SelectRoot
                 collection={pageSizeCollection}
                 size={'sm'}
-                defaultValue={['10']}
+                defaultValue={['5']}
                 onValueChange={handlePageSizeChange}
               >
                 <SelectControl>

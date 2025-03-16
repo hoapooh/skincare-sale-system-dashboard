@@ -49,7 +49,7 @@ const MainLayout = () => {
           thickness="4px"
           speed="0.65s"
           emptyColor="gray.200"
-          color="brown"
+          color="black"
           size="xl"
         />
       </Center>

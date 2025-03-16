@@ -3,7 +3,12 @@ import StatisticCard from './StatisticCard';
 import { FormatNumber, Grid } from '@chakra-ui/react';
 import { FaBox, FaMoneyBillWave, FaShoppingCart, FaUser } from 'react-icons/fa';
 
-const StatisticCardGroup = ({ totalUsers, totalRevenue }) => {
+const StatisticCardGroup = ({
+  totalUsers,
+  totalRevenue,
+  totalOrders,
+  totalProducts,
+}) => {
   const statisticsInfo = [
     {
       title: 'Total Users',
@@ -39,7 +44,7 @@ const StatisticCardGroup = ({ totalUsers, totalRevenue }) => {
     },
     {
       title: 'Total Orders',
-      value: 100,
+      value: totalOrders?.length || 0,
       icon: (
         <FaShoppingCart
           style={{
@@ -53,7 +58,7 @@ const StatisticCardGroup = ({ totalUsers, totalRevenue }) => {
     },
     {
       title: 'Total Products',
-      value: 1000,
+      value: totalProducts,
       icon: (
         <FaBox
           style={{
@@ -68,7 +73,11 @@ const StatisticCardGroup = ({ totalUsers, totalRevenue }) => {
   ];
 
   return (
-    <Grid templateColumns={'repeat(4, 1fr)'} gap={10} mt={4}>
+    <Grid
+      templateColumns={{ base: '1fr', lg: 'repeat(4, 1fr)' }}
+      gap={10}
+      mt={4}
+    >
       {statisticsInfo.map(statistic => (
         <StatisticCard
           key={statistic.title}
