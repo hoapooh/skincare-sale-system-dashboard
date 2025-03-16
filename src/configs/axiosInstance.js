@@ -18,8 +18,6 @@ const handleRefreshToken = async () => {
     return await mutex.runExclusive(async () => {
         const response = await axiosInstance.get('/auth/refresh-token');
 
-        console.log(response);
-
         if (response && response.data) return response.data.access_token;
         else return null;
     });
@@ -34,8 +32,6 @@ axiosInstance.interceptors.request.use(function (config) {
     ) {
         config.headers.Authorization =
             'Bearer ' + window.localStorage.getItem('access_token');
-
-        console.log('Bearer ' + window.localStorage.getItem('access_token'));
     }
     if (!config.headers.Accept && config.headers['Content-Type']) {
         config.headers.Accept = 'application/json';

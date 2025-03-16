@@ -54,7 +54,7 @@ const LoginForm = () => {
             if (loginResponse) {
                 login(loginResponse);
                 toaster.create({
-                    title: 'Đăng nhập thành công',
+                    title: 'Login successful',
                     type: 'success',
                 });
 

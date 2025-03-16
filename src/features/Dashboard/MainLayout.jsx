@@ -27,14 +27,18 @@ const MainLayout = () => {
     const closeDrawer = () => setIsDrawerOpen(false);
 
     useEffect(() => {
-        if (user) {
+        if (user && isAuthenticated && localStorage.getItem('access_token')) {
             // Still verify admin role
-            if (user.role !== 'admin' || !isAuthenticated) {
+            if (user.role !== 'admin') {
                 localStorage.removeItem('access_token');
                 navigate('/login', { replace: true });
             } else {
                 setIsLoading(false);
             }
+        } else {
+            setIsLoading(false);
+            localStorage.removeItem('access_token');
+            navigate('/login', { replace: true });
         }
     }, [isAuthenticated, navigate, user]);
 
