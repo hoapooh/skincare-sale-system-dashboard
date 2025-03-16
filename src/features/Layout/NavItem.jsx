@@ -1,13 +1,13 @@
 import { Box, Flex, Icon } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 
-const NavItem = ({ icon, children, path, ...rest }) => {
+const NavItem = ({ icon, children, path, onClose, ...rest }) => {
   const location = useLocation();
   const isActive = location.pathname === path;
   const color = isActive ? 'white' : 'black';
 
   return (
-    <Link to={path}>
+    <Link to={path} onClick={onClose}>
       <Box style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
         <Flex
           align="center"

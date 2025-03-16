@@ -14,7 +14,6 @@ import {
   MenuItem,
   MenuPositioner,
   MenuRoot,
-  MenuSeparator,
   MenuTrigger,
   Portal,
   Text,
@@ -86,8 +85,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
-                  spacing="1px"
                   ml="2"
+                  gap={0}
                 >
                   <Text fontSize="sm">{user.name}</Text>
                   <Text
@@ -106,9 +105,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
             <Portal>
               <MenuPositioner>
                 <MenuContent>
-                  <MenuItem
+                  {/* <MenuItem
                     _hover={{
-                      bg: 'brown',
+                      bg: 'black',
                       color: 'white',
                     }}
                     value="profile"
@@ -116,11 +115,11 @@ const MobileNav = ({ onOpen, ...rest }) => {
                     Profile
                   </MenuItem>
 
-                  <MenuSeparator />
+                  <MenuSeparator /> */}
 
                   <MenuItem
                     _hover={{
-                      bg: 'brown',
+                      bg: 'black',
                       color: 'white',
                     }}
                     value="logout"

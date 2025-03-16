@@ -57,7 +57,7 @@ const UserDrawer = ({ open, setOpen, selecteduser }) => {
     <Drawer.Root
       open={open}
       onOpenChange={e => setOpen(e.open)}
-      size={'md'}
+      size={{ base: 'full', md: 'md' }}
       placement={'end'}
     >
       <Portal>
@@ -78,7 +78,7 @@ const UserDrawer = ({ open, setOpen, selecteduser }) => {
                     thickness="4px"
                     speed="0.65s"
                     emptyColor="gray.200"
-                    color="brown"
+                    color="black"
                     size="xl"
                   />
                 </Center>
@@ -86,8 +86,8 @@ const UserDrawer = ({ open, setOpen, selecteduser }) => {
                 <VStack spacing={6} align="stretch">
                   {/* User Profile Header */}
                   <Flex align="center">
-                    <Avatar.Root size="xl" name={user.name}>
-                      <Avatar.Fallback bg="brown" color="white">
+                    <Avatar.Root size="xl" name={user.name} bg={'black'}>
+                      <Avatar.Fallback color={'white'}>
                         {user.name?.substring(0, 2).toUpperCase()}
                       </Avatar.Fallback>
                     </Avatar.Root>

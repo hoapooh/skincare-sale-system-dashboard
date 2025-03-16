@@ -17,12 +17,17 @@ const SidebarContent = ({ onClose, ...rest }) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+          DoDoon
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon} path={link.link}>
+        <NavItem
+          key={link.name}
+          icon={link.icon}
+          path={link.link}
+          onClose={onClose}
+        >
           {link.name}
         </NavItem>
       ))}
