@@ -36,8 +36,8 @@ const customConfig = defineConfig({
         },
       },
       fonts: {
-        heading: { value: "'Merriweather', serif" },
-        body: { value: "'Merriweather', serif" },
+        heading: { value: "'Roboto', serif" },
+        body: { value: "'Roboto', serif" },
       },
       sizes: {
         navbarHeight: { value: '180px' },
