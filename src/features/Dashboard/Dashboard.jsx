@@ -1,98 +1,78 @@
-import { FormatNumber, Grid, Heading } from '@chakra-ui/react';
-import StatisticCard from '../User/StatisticCard';
+import { Box, Flex, Heading } from '@chakra-ui/react';
+import StatisticCardGroup from './StatisticCardGroup';
+import RevenueChart from './RevenueChart';
 import { useEffect, useState } from 'react';
 import { getAllUsersApi } from '@/services/userApi';
-import { FaBox, FaMoneyBillWave, FaShoppingCart, FaUser } from 'react-icons/fa';
+import { getOrderTotalApi } from '@/services/orderApi';
+import { getAllOrdersApi, getAllProductsApi } from '@/services/dashboardApi';
+import RecentOrderList from './RecentOrderList';
 
 const Dashboard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(null);
+  const [totalProducts, setTotalProducts] = useState(0);
 
   const fetchTotalUsers = async () => {
     const users = await getAllUsersApi(1, 5);
     setTotalUsers(users.meta.total);
   };
 
+  const fetchTotalRevenue = async () => {
+    const revenue = await getOrderTotalApi();
+    setTotalRevenue(revenue);
+  };
+
+  const fetchTotalOrders = async () => {
+    const orders = await getAllOrdersApi();
+    setTotalOrders(orders);
+  };
+
+  const fetchTotalProducts = async () => {
+    const products = await getAllProductsApi();
+    setTotalProducts(products.length);
+  };
+
   useEffect(() => {
     fetchTotalUsers();
+    fetchTotalRevenue();
+    fetchTotalOrders();
+    fetchTotalProducts();
   }, []);
-
-  const statisticsInfo = [
-    {
-      title: 'Total Users',
-      value: totalUsers,
-      icon: (
-        <FaUser
-          style={{
-            position: 'absolute',
-            right: 20,
-            top: 20,
-            color: 'black',
-          }}
-        />
-      ),
-    },
-    {
-      title: 'Total Revenue',
-      value: (
-        <>
-          <FormatNumber value={1000000} currency="VND" /> VND
-        </>
-      ),
-      icon: (
-        <FaMoneyBillWave
-          style={{
-            position: 'absolute',
-            right: 20,
-            top: 20,
-            color: 'black',
-          }}
-        />
-      ),
-    },
-    {
-      title: 'Total Orders',
-      value: 100,
-      icon: (
-        <FaShoppingCart
-          style={{
-            position: 'absolute',
-            right: 20,
-            top: 20,
-            color: 'black',
-          }}
-        />
-      ),
-    },
-    {
-      title: 'Total Products',
-      value: 1000,
-      icon: (
-        <FaBox
-          style={{
-            position: 'absolute',
-            right: 20,
-            top: 20,
-            color: 'black',
-          }}
-        />
-      ),
-    },
-  ];
 
   return (
     <>
       <Heading size={'2xl'}>Dashboard</Heading>
 
-      <Grid templateColumns={'repeat(4, 1fr)'} gap={10} mt={4}>
-        {statisticsInfo.map(statistic => (
-          <StatisticCard
-            key={statistic.title}
-            title={statistic.title}
-            value={statistic.value}
-            icon={statistic.icon}
-          />
-        ))}
-      </Grid>
+      {/* Statistic Cards */}
+      <StatisticCardGroup
+        totalUsers={totalUsers}
+        totalRevenue={totalRevenue}
+        totalOrders={totalOrders}
+        totalProducts={totalProducts}
+      />
+
+      <Flex
+        w={'full'}
+        flexDir={{ base: 'column', lg: 'row' }}
+        gap={4}
+        justifyContent={'space-between'}
+        mt={6}
+      >
+        {/* Revenue Chart */}
+        <Box w={'full'} p={4} bg={'white'} borderRadius={'md'}>
+          <Heading size={'lg'}>Overview</Heading>
+          <RevenueChart totalRevenue={totalRevenue} />
+        </Box>
+
+        {/* Recent Orders */}
+        <Box w={'full'} p={4} bg={'white'} borderRadius={'md'}>
+          <Heading size={'lg'} mb={4}>
+            Recent Orders
+          </Heading>
+          <RecentOrderList totalOrders={totalOrders} />
+        </Box>
+      </Flex>
     </>
   );
 };

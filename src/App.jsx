@@ -3,13 +3,27 @@ import routes from './configs/routes';
 import NotFound from './features/NotFound/NotFound';
 import { useAuthStore } from './store/authStore';
 import { useEffect } from 'react';
+import { Center, Spinner } from '@chakra-ui/react';
 
 function App() {
-  const { loadUser } = useAuthStore();
+  const { loadUser, isLoading } = useAuthStore();
 
   useEffect(() => {
     loadUser();
   }, [loadUser]);
+
+  if (isLoading)
+    return (
+      <Center h="100vh">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="black"
+          size="xl"
+        />
+      </Center>
+    );
 
   return (
     <>
