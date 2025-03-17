@@ -14,7 +14,9 @@ const AuthLayout = () => {
       user?.role === 'admin' &&
       localStorage.getItem('access_token')
     ) {
-      navigate('/');
+      // Redirect to the last visited path or dashboard if none exists
+      const lastPath = sessionStorage.getItem('lastPath');
+      navigate(lastPath || '/', { replace: true });
     } else {
       setLoading(false);
     }

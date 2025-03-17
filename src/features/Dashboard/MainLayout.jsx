@@ -27,6 +27,13 @@ const MainLayout = () => {
   const closeDrawer = () => setIsDrawerOpen(false);
 
   useEffect(() => {
+    // Save the current path to session storage when navigating
+    if (!isLoading && user?.role === 'admin') {
+      sessionStorage.setItem('lastPath', location.pathname);
+    }
+  }, [isLoading, user]);
+
+  useEffect(() => {
     if (user && isAuthenticated && localStorage.getItem('access_token')) {
       // Still verify admin role
       if (user.role !== 'admin') {
@@ -37,8 +44,11 @@ const MainLayout = () => {
       }
     } else {
       setIsLoading(false);
-      localStorage.removeItem('access_token');
-      navigate('/login', { replace: true });
+      // Restore the last path after authentication is confirmed
+      const lastPath = sessionStorage.getItem('lastPath');
+      if (lastPath && lastPath !== '/' && location.pathname === '/') {
+        navigate(lastPath, { replace: true });
+      }
     }
   }, [isAuthenticated, navigate, user]);
 

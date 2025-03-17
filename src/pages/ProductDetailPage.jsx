@@ -1,6 +1,6 @@
 import ProductDetail from '@/features/Product/ProductDetail';
 import { getProductByIdApi } from '@/services/productApi';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const ProductDetailPage = () => {
@@ -14,8 +14,6 @@ const ProductDetailPage = () => {
   useEffect(() => {
     fetchProductDetail();
   }, []);
-
-  console.log(data);
 
   return (
     <>

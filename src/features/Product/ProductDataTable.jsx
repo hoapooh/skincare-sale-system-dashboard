@@ -60,12 +60,13 @@ const ProductDataTable = ({ data }) => {
   ]);
 
   return (
-    <Box className="ag-theme-alpine" height="600px" width="100%">
+    <Box className="ag-theme-alpine" width="100%">
       <AgGridReact
         rowData={data}
         columnDefs={colDefs}
         pagination
-        paginationAutoPageSize
+        paginationPageSize={10}
+        paginationPageSizeSelector={[10, 20, 30]}
         enableCellTextSelection
         animateRows
         domLayout="autoHeight"
