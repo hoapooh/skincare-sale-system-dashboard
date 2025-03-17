@@ -46,14 +46,11 @@ import {
 import { useEffect, useState } from 'react';
 // import { AiFillEdit } from 'react-icons/ai';
 import { GrView } from 'react-icons/gr';
-import {
-  IoChevronForward,
-  IoChevronBack,
-  IoChevronDown,
-} from 'react-icons/io5';
+import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { MdDelete, MdRestore } from 'react-icons/md';
 import UserDrawer from './UserDrawer';
 import { format } from 'date-fns';
+import { FaEllipsisVertical } from 'react-icons/fa6';
 
 const pageSizeCollection = createListCollection({
   items: [
@@ -132,7 +129,6 @@ const DataTable = () => {
   const handlePageSizeChange = value => {
     setPageSize(Number(value.value[0]));
     setCurrentPage(1); // Reset to first page when changing page size
-    console.log(value);
   };
 
   const handleViewUser = userId => {
@@ -292,15 +288,15 @@ const DataTable = () => {
                       {format(new Date(user.createdAt), 'dd/MM/yyyy')}
                     </TableCell>
                     <TableCell>
-                      <MenuRoot>
+                      <MenuRoot positioning={{ placement: 'bottom-end' }}>
                         <MenuTrigger
                           as={Button}
                           size="sm"
+                          p={0}
                           colorPalette={'black'}
                           colorScheme={'dark'}
                         >
-                          Actions
-                          <IoChevronDown />
+                          <FaEllipsisVertical />
                         </MenuTrigger>
                         <Portal>
                           <MenuPositioner>
