@@ -3,8 +3,6 @@ import { Avatar, Badge, Flex, HStack, Text } from '@chakra-ui/react';
 import { formatDistanceToNow } from 'date-fns';
 
 const RecentOrderItem = ({ order }) => {
-  console.log(order);
-
   return (
     <HStack
       w={'full'}
