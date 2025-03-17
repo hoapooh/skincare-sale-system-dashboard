@@ -1,3 +1,4 @@
+import { formatVND } from '@/utils/formatVND';
 import {
   Bar,
   BarChart,
@@ -23,32 +24,6 @@ const RevenueChart = ({ totalRevenue }) => {
         revenue: item.totalAmount,
       };
     }) || [];
-
-  // Enhanced formatter for currency values with appropriate scaling
-  const formatVND = value => {
-    if (value === 0) return '0';
-
-    // Define suffixes for different scales
-    const suffixes = ['', 'K', 'M', 'B', 'T'];
-
-    // Determine the appropriate suffix
-    const tier = (Math.log10(Math.abs(value)) / 3) | 0;
-
-    // If the number is less than 1000, show it without abbreviation
-    if (tier === 0)
-      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // Calculate the scaled value
-    const suffix = suffixes[tier];
-    const scale = Math.pow(10, tier * 3);
-    const scaled = value / scale;
-
-    // Format to 1 decimal place when needed, otherwise show as integer
-    const formatted = scaled % 1 !== 0 ? scaled.toFixed(1) : scaled.toString();
-
-    // Add commas as thousands separators and append the suffix
-    return formatted.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + suffix;
-  };
 
   // Custom tooltip to display formatted currency values
   const CustomTooltip = ({ active, payload, label }) => {
@@ -77,10 +52,10 @@ const RevenueChart = ({ totalRevenue }) => {
   return (
     <ResponsiveContainer
       width={'100%'}
-      height={400}
+      height={360}
       style={{ marginInline: 'auto' }}
     >
-      <BarChart data={formattedData} margin={{ top: 20, right: 30, bottom: 5 }}>
+      <BarChart data={formattedData} margin={{ top: 20, right: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"
