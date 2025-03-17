@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { getAllOrdersApi } from '@/services/orderApi';
 import OrderTable from '@/features/Order/OrderTable';
 import { Box, Heading, Spinner, Center } from '@chakra-ui/react';
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+
+// Register all Community features
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -22,6 +26,8 @@ const OrderPage = () => {
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  console.log(orders);
 
   return (
     <Box>
