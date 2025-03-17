@@ -1762,6 +1762,11 @@ acorn@^8.14.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.14.0.tgz#063e2c70cac5fb4f6467f0b11152e04c682795b0"
   integrity sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==
 
+ag-charts-types@10.3.4:
+  version "10.3.4"
+  resolved "https://registry.yarnpkg.com/ag-charts-types/-/ag-charts-types-10.3.4.tgz#190196673db80c1ce20a0ef7a81a3b50ead8a8fc"
+  integrity sha512-MU+3gvKn1jEyLlMHS0Vu0nHmIQxiVJAnA6ftUatLZvV0c7hOWap4VWghqZ0cVZUJsCdMI59Iuq1u3xquKv4LOQ==
+
 ag-charts-types@11.1.1:
   version "11.1.1"
   resolved "https://registry.yarnpkg.com/ag-charts-types/-/ag-charts-types-11.1.1.tgz#2d5132978248c9422b7129df6d2c3537c1ad99c5"

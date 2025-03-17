@@ -11,7 +11,7 @@ import {
   Portal,
 } from '@chakra-ui/react';
 import { AgGridReact } from 'ag-grid-react';
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import CustomBadge from './CustomBadge';
 import { GrView } from 'react-icons/gr';
 import OrderDrawer from './OrderDrawer';
@@ -19,8 +19,6 @@ import { updateOrderStatusApi } from '@/services/orderApi';
 import { toaster } from '@/components/ui/toaster';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ModuleRegistry } from '@ag-grid-community/core';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 // Register the required module
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
@@ -28,7 +26,6 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 const OrderTable = ({ data, onOrdersUpdated }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const gridRef = useRef();
 
   // Function to handle viewing an order
   const handleViewOrder = useCallback(orderId => {
@@ -282,24 +279,19 @@ const OrderTable = ({ data, onOrdersUpdated }) => {
 
   return (
     <>
-      <Box w={'full'} className="ag-theme-alpine">
+      <Box w={'full'}>
         <AgGridReact
-          ref={gridRef}
           rowData={data}
           columnDefs={colDefs}
           defaultColDef={{
             flex: 1,
-            resizable: true,
           }}
           pagination={true}
           paginationPageSize={10}
-          paginationPageSizeSelector={[10, 20, 30, 50]}
+          paginationPageSizeSelector={[10, 20, 30]}
           suppressColumnVirtualisation={false}
           domLayout="autoHeight"
           enableCellTextSelection={true}
-          animateRows={true}
-          rowSelection="single"
-          context={{ onOrdersUpdated, handleViewOrder }}
         />
       </Box>
 
