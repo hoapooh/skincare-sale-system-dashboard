@@ -87,11 +87,12 @@ const ProductDrawer = ({ open, setOpen, selectedProduct }) => {
                   {/* Product Image */}
                   <Box>
                     <Image
-                      src={product.image}
+                      src={product.imageUrl}
                       alt={product.name}
                       maxH="200px"
                       objectFit="cover"
                       borderRadius="md"
+                      fallbackSrc="https://via.placeholder.com/200?text=No+Image"
                     />
                   </Box>
 
