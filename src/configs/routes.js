@@ -3,6 +3,7 @@ import MainLayout from '@/features/Dashboard/MainLayout';
 import DashboardPage from '@/pages/DashboardPage';
 import LoginPage from '@/pages/LoginPage';
 import OrdersPage from '@/pages/OrdersPage';
+import ProductDetailPage from '@/pages/ProductDetailPage';
 import ProductsPage from '@/pages/ProductsPage';
 import UsersPage from '@/pages/UsersPage';
 
@@ -29,6 +30,11 @@ const routes = [
         path: '/orders',
         component: OrdersPage,
         title: 'Admin | Orders',
+      },
+      {
+        path: 'product/:id',
+        component: ProductDetailPage,
+        title: 'Admin | Product Details',
       },
     ],
   },

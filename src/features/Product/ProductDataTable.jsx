@@ -1,16 +1,32 @@
-import {
-  getAllProductsApi,
-  deleteProductApi,
-  restoreProductApi,
-} from '@/services/productApi';
-import { Box } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import { AgGridReact } from 'ag-grid-react';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
-import { useEffect, useState } from 'react';
-import ProductDrawer from './ProductDrawer';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { GrView } from 'react-icons/gr';
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
+
+// Custom cell renderer for the action buttons
+const ActionButtonRenderer = props => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate(`/product/${props.data._id}`);
+  };
+
+  return (
+    <Button
+      size="sm"
+      colorPalette="black"
+      onClick={handleViewDetails}
+      leftIcon={<GrView />}
+    >
+      View
+    </Button>
+  );
+};
 
 const ProductDataTable = ({ data }) => {
   const [colDefs] = useState([
@@ -33,7 +49,16 @@ const ProductDataTable = ({ data }) => {
       sortable: true,
       filter: true,
     },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      sortable: false,
+      filter: false,
+      cellRenderer: ActionButtonRenderer,
+      width: 120,
+    },
   ]);
+
   return (
     <Box className="ag-theme-alpine" height="600px" width="100%">
       <AgGridReact
