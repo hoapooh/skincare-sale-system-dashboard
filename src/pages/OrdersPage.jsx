@@ -45,7 +45,7 @@ const OrderPage = () => {
           />
         </Center>
       ) : (
-        <OrderTable data={orders} />
+        <OrderTable data={orders} onOrderUpdated={fetchOrders} />
       )}
     </Box>
   );

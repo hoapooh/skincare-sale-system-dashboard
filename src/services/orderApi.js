@@ -39,3 +39,15 @@ export const updateOrderApi = async (orderId, data) => {
     throw error;
   }
 };
+
+export const updateOrderStatusApi = async (orderId, status) => {
+  try {
+    const response = await axiosInstance.patch(`/orders/${orderId}`, {
+      status,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update order status', error);
+    throw error;
+  }
+};
