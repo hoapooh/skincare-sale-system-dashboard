@@ -1,5 +1,7 @@
 import AuthLayout from '@/features/Auth/AuthLayout';
 import MainLayout from '@/features/Dashboard/MainLayout';
+import BlogDetailPage from '@/pages/BlogDetailPage';
+import BlogPage from '@/pages/BlogPage';
 import DashboardPage from '@/pages/DashboardPage';
 import LoginPage from '@/pages/LoginPage';
 import OrdersPage from '@/pages/OrdersPage';
@@ -35,6 +37,16 @@ const routes = [
         path: 'product/:id',
         component: ProductDetailPage,
         title: 'Admin | Product Details',
+      },
+      {
+        path: '/blogs',
+        component: BlogPage,
+        title: 'Admin | Blogs',
+      },
+      {
+        path: '/blogs/:id',
+        component: BlogDetailPage,
+        title: 'Admin | Blog Details',
       },
     ],
   },

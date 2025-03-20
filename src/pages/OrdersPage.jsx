@@ -27,8 +27,6 @@ const OrderPage = () => {
     fetchOrders();
   }, []);
 
-  console.log(orders);
-
   return (
     <Box>
       <Heading size="2xl" mb={4}>
